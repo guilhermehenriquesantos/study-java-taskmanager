@@ -10,20 +10,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.taskmanager.br.taskmanager.model.Task;
 import com.taskmanager.br.taskmanager.repository.TaskRepository;
+import com.taskmanager.br.taskmanager.repository.TaskRepositoryH2;
 
 @Controller
 public class TaskController {
 
-    private TaskRepository taskRepository;
-
-    // Contrutor para injetar o repositório
-    public TaskController() {
-        this.taskRepository = new TaskRepository();
-    }
+    @Autowired
+    private TaskRepositoryH2 taskRepositoryH2;
+    
+    // private TaskRepository taskRepository;
+    // // Contrutor para injetar o repositório
+    // public TaskController() {
+    //     this.taskRepository = new TaskRepository();
+    // }
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("tasks", taskRepository.findAll());
+        model.addAttribute("tasks", taskRepositoryH2.findAll());
         return "index";
     }
 
@@ -32,13 +35,13 @@ public class TaskController {
         Task task = new Task();
         task.setDescription(description);
         task.setCompleted(false);
-        taskRepository.save(task);
+        taskRepositoryH2.save(task);
         return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
-        taskRepository.deleteById(id);
+        taskRepositoryH2.deleteById(id);
         return "redirect:/";
     }
 
