@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+
+    <!-- Formulário para adicionar uma nova tarefa -->
+    <form action="/add" method="post">
+        <input type="text" name="description" placeholder="Nova tarefa" required>
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <!-- Lista de tarefas -->
+    <ul>
+        <li th:each="task : ${tasks}">
+            <span th:text="${task.description}"></span>
+            <a th:href="@{'/delete/' + ${task.id}}">[Remover]</a>
+        </li>
+    </ul>
+</body>
+</html>
